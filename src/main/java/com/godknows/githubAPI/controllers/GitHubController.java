@@ -1,5 +1,7 @@
 package com.godknows.githubAPI.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.godknows.githubAPI.dtos.DetailedUserDTO;
 import com.godknows.githubAPI.dtos.PagedUserDTO;
+import com.godknows.githubAPI.dtos.RepoUserDTO;
 import com.godknows.githubAPI.services.GitHubService;
 
 @RestController
@@ -32,5 +35,13 @@ public class GitHubController {
 		DetailedUserDTO dto = githubService.getDetailedUser(username);
 		return ResponseEntity.ok(dto);
 	}
+	
+	
+	@GetMapping(value="/users/{username}/repos")
+	public ResponseEntity<List<RepoUserDTO>> getUsersRepo (@PathVariable String username) {
+		List<RepoUserDTO> dto = githubService.getUsersRepo(username);
+		return ResponseEntity.ok(dto);
+	}
+	
 
 }
