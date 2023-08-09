@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.godknows.githubAPI.dtos.DetailedUserDTO;
 import com.godknows.githubAPI.dtos.PagedUserDTO;
 import com.godknows.githubAPI.dtos.UserDTO;
 
@@ -27,6 +28,12 @@ public class GitHubService {
 		long newSince = result.getBody().get(result.getBody().size()-1).getId();
 		dto.setNext("http://localhost:8080/api/users?since=" + newSince);
 		return dto;
+	}
+	
+	public DetailedUserDTO getDetailedUser(String username) {
+		ParameterizedTypeReference<DetailedUserDTO> responseType = new ParameterizedTypeReference<DetailedUserDTO> () {};
+		ResponseEntity<DetailedUserDTO> result = restTemplate.exchange("https://api.github.com/users/" + username, HttpMethod.GET,null, responseType);
+		return result.getBody();
 	}
 
 }
